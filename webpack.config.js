@@ -3,9 +3,8 @@ const path = require('path');
 
 module.exports = {
   mode: process.env.NODE_ENV,
-  entry: {
-    src: './client/index.js',
-  },
+  entry: './client/index.js',
+  
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js'
@@ -18,12 +17,12 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
+            presets: ['@babel/env', '@babel/react']
           }
         }
       },
       {
-        test: /\.s[ac]ss$/i,
+        test: /\.s?css/,
         use: ['style-loader', 'css-loader', 'sass-loader']
       }
     ]
@@ -33,7 +32,6 @@ module.exports = {
     new HtmlWebPackPlugin({
       title: 'Development',
       template: './client/index.html',
-      filename: './index.html'
     }),
   ],
  
@@ -42,8 +40,8 @@ module.exports = {
       publicPath: '/dist',
       directory: path.resolve(__dirname, 'dist'),
     },
-    proxy: {
-      '/api': 'http://localhost:3000'
-    }
+    // proxy: {
+    //   '/api': 'http://localhost:3000'
+    // }
   }
 }

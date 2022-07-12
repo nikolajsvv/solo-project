@@ -4,8 +4,6 @@ const path = require('path');
 
 const PORT = 3000;
 
-app.use(express.static(path.join(__dirname, './client/index.html')));
-
 if (process.env.NODE_ENV === 'production') {
   app.use('/dist', express.static(path.join(__dirname, './dist')));
 
