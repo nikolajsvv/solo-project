@@ -1,10 +1,93 @@
-.ingredient-list {
-  height: 250px ;
-  width: 250px;
-  border: 1px solid black;
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Cabin&family=Fjalla+One&family=Oswald:wght@200;400&family=Rubik+Moonrocks&family=Shadows+Into+Light&display=swap');
+body {
+  // background-color: #5AA9E6;
+  background-color: #7FC8F8;
+}
+.header {
+  font-size: 30px;
+  text-align: center;
+  font-family: 'Bangers', sans-serif;
+  color: #FFE45E;
+  text-shadow: -2px 2px #FF6392;
+}
+.flex-container {
+  width: 90%;
+  margin: auto;
 
 }
 
+.recipe-container {
+  // display: block;
+  box-shadow: -5px 0px 5px 5px #5AA9E6;
+  width: 74%;
+  height: 1000px;
+  float: right;
+}
+
+.recipe-container h2 {
+  font-size: 40px;
+  text-shadow: 2px 2px 5px #5AA9E6;
+  font-family: 'Fjalla One', cursive;
+  color: #F9F9F9;
+  padding: 30px;
+  margin: auto;
+}
+.ingredient-container {
+  // display: block;
+  box-shadow: -5px 0px 5px 5px #5AA9E6;
+  width: 25%;
+  height: 1000px;
+  float: left;
+}
+
+::placeholder {
+  color: black;
+}
+
+.ingredient-container button {
+  border: 1px solid #FF6392;
+  margin: 10px auto;
+  width: 50%;
+  display: block;
+  background-color: #FF6392;
+  text-align: center;
+  font-size: 20px;
+  box-shadow: -5px 5px black;
+}
+
+.ingredient-container button:hover {
+  background-color: #ffadc6;
+  border: 1px solid #ffadc6;
+  color: white;
+}
+
+.ingredient-container input {
+  color: black;
+  border: 1px solid #FFE45E;
+  width: 75%;
+  margin: 0 auto;
+  display: block;
+  margin-top: 5px;
+  margin-right: auto;
+  margin-left: auto;
+  padding:10px;
+  background-color: #FFE45E;
+  text-align: center;
+  box-shadow: -5px 5px black;
+  font-size:20px;
+}
+
+.ingredient-container h2 {
+  font-size: 40px;
+  text-shadow: 2px 2px 5px #5AA9E6;
+  text-align: center;
+  font-family: 'Fjalla One', cursive;
+  color: #F9F9F9;
+}
+
+.ingredient-list {
+  
+}
 .ingredient-list li {
   padding-left: 10px;
   padding-top: 10px;

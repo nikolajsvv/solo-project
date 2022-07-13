@@ -1,7 +1,17 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Ingredients from './Ingredients.jsx';
+import Header from './Header.jsx';
+import RecipeList from './RecipeList.jsx';
+
+// API KEY - 6f14c599b3mshe03f43b2a421a47p1f86d2jsnaa1788e43949
+
 
 function App() {
+
+  const searchRecipes = async (ingredients) => {
+    const reponst = await fetch()
+  }
+
   // destructure stat
   // ingredients represents all ingredients inside of state, setIngredients is the function to update ingredients
   const [ingredients, setIngredients] = useState([])
@@ -22,13 +32,23 @@ function App() {
 
   return (
     <>
-      <input ref={itemNameRef}type='text'/>
-      <button onClick={handleAddItem}>Add Item</button>
-      <div className='ingredient-container'>
-        <h3>Ingredient List</h3>
-      </div>
-      <div className='ingredient-list'>
-        <Ingredients ingredients={ingredients}/>
+      <Header/>
+      <RecipeList/>
+      {/* <input ref={itemNameRef}type='text'/>
+      <button onClick={handleAddItem}>Add Item</button> */}
+      <div className='flex-container'>
+          <div className='ingredient-container'>
+            <h2>What's in your fridge?</h2>
+            <input  placeholder="Bacon"/>
+            <button onClick={handleAddItem} >ADD TO LIST</button>
+            <div className='ingredient-list'>
+              <Ingredients ingredients={ingredients}/>
+            </div>
+          </div>
+
+          <div className='recipe-container'>
+            <h2>Recipes</h2>
+          </div>
       </div>
     </>
 

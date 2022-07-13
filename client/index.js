@@ -6,4 +6,3 @@ import styles from './scss/application.scss';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App/>)
-
