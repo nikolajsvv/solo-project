@@ -5,34 +5,20 @@ import RecipeList from './RecipeList.jsx';
 
 // API KEY - 6f14c599b3mshe03f43b2a421a47p1f86d2jsnaa1788e43949
 
-//   {
-//     "status": "ok",
-//     "ingredients": [
-//         "eggs",
-//         "bacon",
-//         "black pepper"
-//     ],
-//     "recipe_name": [
-//         "Crispy Oven Bacon and Eggs",
-//         "Pepper Egg-in-a-Hole",
-//         "Foolproof Eggs Benedict Recipe"
-//     ],
-//     "recipe_url": [
-//         "https://cooking.nytimes.com/recipes/1021747-crispy-oven-bacon-and-eggs",
-//         "https://www.delish.com/cooking/recipe-ideas/recipes/a51522/pepper-egg-in-a-hole-recipe/",
-//         "https://www.seriouseats.com/food-lab-foolproof-eggs-benedict-recipe"
-//     ]
-// }
+
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {ingredients: [], value: ''};
+    this.state = {
+      ingredients: [], 
+      recipes: []
+    };
 
     // bind handleAddIngredient to make 'this' work in the callback
     // ----> dont need this because used anonymous function for handleAddIngredient
     this.handleAddIngredient = this.handleAddIngredient.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.handleGetRecipe = this.handleGetRecipe.bind(this);
   }
 
   // Whenever APP is rendered to the DOM
@@ -40,35 +26,82 @@ class App extends React.Component {
     // not sure what we will do here yet
   }
 
-  // event for input field
-  handleChange(event) {
-    this.setState({value: event.target.value});
-  }
+  handleGetRecipe(event) {
+    const ingredientArr = this.state.ingredients;
+    // const tempObj = 
+    //   {
+    //     "status": "ok",
+    //     "ingredients": [
+    //         "eggs",
+    //         "bacon",
+    //         "black pepper"
+    //     ],
+    //     "recipe_name": [
+    //         "Crispy Oven Bacon and Eggs",
+    //         "Pepper Egg-in-a-Hole",
+    //         "Foolproof Eggs Benedict Recipe"
+    //     ],
+    //     "recipe_url": [
+    //         "https://cooking.nytimes.com/recipes/1021747-crispy-oven-bacon-and-eggs",
+    //         "https://www.delish.com/cooking/recipe-ideas/recipes/a51522/pepper-egg-in-a-hole-recipe/",
+    //         "https://www.seriouseats.com/food-lab-foolproof-eggs-benedict-recipe"
+    //     ]
+    // }
+    
+    // converts to string format for URL
+    const ingredientStr = ingredientArr.join('%2C')
+    // this.setState(prevState => ({
+    //   recipes: [...prevState.recipes, tempObj]
+    // }))
+    
+  
+    const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': '6f14c599b3mshe03f43b2a421a47p1f86d2jsnaa1788e43949',
+      'X-RapidAPI-Host': 'tastyworld.p.rapidapi.com'
+      }
+    };
+    fetch(`https://tastyworld.p.rapidapi.com/v1/suggest_recipe?ingredients=${ingredientStr}&limit=1`, options)
+    .then(response => response.json())
+    .then(response => {
+          this.setState(prevState => ({
+            recipes: [...prevState.recipes, response]
+          }))
+          console.log(response)
+        })
+    .catch(err => console.error(err));
+    }
 
   // () => ensures 'this' is bound within handleAddIngredient
   handleAddIngredient(event) {
     // store value of input
-    const item = this.state.value;
+    const item = document.getElementById('itemInput').value;
     const ingredients = this.state.ingredients;
+    let itemExists = false;
 
+    if (item === '') return;
     // check if value exists in state.ingredients
     ingredients.forEach((ingredient) => {
       //  if exists, alert that cannot accept duplicate values
       if (item === ingredient) {
-        alert('This ingredient already exists in your list!');
-        return;
+        itemExists = true;
       }
     })
 
-    //  otherwise setState with new ingredient
-    this.setState(prevState => ({
-      ingredients: [...prevState.ingredients, item]
-    }))
-    // reset value of the input to null
-    // ref.current.value = '';
-
-    event.preventDefault();
+    // if item doesn't exist, add to state.ingredients
+    if (!itemExists) {
+      this.setState(prevState => ({
+        ingredients: [...prevState.ingredients, item.toLowerCase()]
+      }))
+      document.getElementById('itemInput').value = '';
+    // otherwise return nothing/console log
+    } else {
+      console.log('This item already exists in your ingredients list');
+      document.getElementById('itemInput').value = '';
+    }
     console.log(ingredients)
+    // set the input value to '' after handleclick event
   }
 
 
@@ -76,7 +109,6 @@ class App extends React.Component {
     return (
       <>
         <Header/>
-        <RecipeList/>
 
         <div className='flex-container'>
             <div className='ingredient-container'>
@@ -84,13 +116,16 @@ class App extends React.Component {
               <div className='ingredient-list'>
                 <Ingredients ingredients={this.state.ingredients}/>
               </div>
-              <input type='text' value={this.state.value} onChange={this.handleChange} placeholder="Bacon"/>
+              <input type='text' value={this.state.value} id='itemInput' placeholder="Enter Item"/>
               <button onClick={this.handleAddIngredient}>ADD TO LIST</button>
             </div>
 
             <div className='recipe-container'>
               <div className='recipe-header'>
-                <button >Get Recipes</button>
+                <button onClick={this.handleGetRecipe}>Get Recipes</button>
+              </div>
+              <div className='recipe-list'>
+                <RecipeList recipes={this.state.recipes} handleGetRecipe={this.handleGetRecipe}/>
               </div>
             </div>
         </div>

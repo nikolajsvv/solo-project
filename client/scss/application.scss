@@ -51,14 +51,32 @@ body {
 .ingredient-container {
   box-shadow: -5px 0px 5px 5px #5AA9E6;
   width: 25%;
-  height: 1000px;
+  height: 500px;
   float: left;
 }
 
 ::placeholder {
   color: black;
 }
+.recipe-list {
+  display: grid;
+  grid-template-columns: 40% 40%;
+  grid-auto-rows: 30%;
+  height: 90%;
+  grid-gap: 10px;
+  padding: 10px;
+}
+.recipe {
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  box-shadow: -1px 1px 5px 1px #5AA9E6;
 
+}
+.recipe iframe {
+  height: 70%;
+  width: 90%;
+}
 .ingredient-container button {
   border: 1px solid #FF6392;
   margin: 10px auto;
@@ -101,7 +119,8 @@ body {
 }
 
 .ingredient-list {
-
+  height: 40%;
+  overflow-y: auto;
 }
 .ingredient-list p {
   text-align: center;;
